@@ -3,6 +3,12 @@
 use std::collections::HashMap;
 use std::hash::Hash;
 use std::fmt::Debug;
+use std::ops::Add;
+
+pub trait Traveler<V, E> {
+    fn visit(&mut self, node: V);
+    fn transit(&mut self, edge: E);
+}
 
 pub struct Graph<T, V, E> {
     data: Vec<Node<V, E>>,
@@ -14,7 +20,12 @@ struct Node<V, E> {
     edges: Vec<(usize, E)>,
 }
 
-impl<T: Eq+Hash+Copy+Clone+Debug, V, E> Graph<T, V, E> {
+impl<T, V, E> Graph<T, V, E>
+where
+    T: Eq+Hash+Copy+Clone+Debug,
+    E: Add<Output = E>,
+    // E: Add,
+{
     pub fn new() -> Graph<T, V, E> {
         Graph {
             data: Vec::new(),
