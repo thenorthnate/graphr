@@ -10,6 +10,8 @@ pub trait Traveler<V, E> {
     fn transit(&mut self, edge: E);
 }
 
+/// Graph is the primary component of the library. It contains the internal structures
+/// necessary to manipulate and build complex graphs.
 pub struct Graph<T, V, E> {
     data: Vec<Node<V, E>>,
     map: HashMap<T, usize>,
@@ -26,6 +28,7 @@ where
     E: Add<Output = E>,
     // E: Add,
 {
+    /// new returns a new Graph initialized, but empty
     pub fn new() -> Graph<T, V, E> {
         Graph {
             data: Vec::new(),
@@ -33,6 +36,7 @@ where
         }
     }
 
+    /// add_node inserts a new node into the graph
     pub fn add_node(&mut self, id: T, node: V) {
         let newnode = Node{
             val: node,
@@ -43,6 +47,7 @@ where
         self.map.insert(id, idx);
     }
 
+    /// add_edge creates an edge between the origin and destination
     pub fn add_edge(&mut self, origin: T, dest: T, edge: E) {
         if let Some(o) = self.map.get(&origin) {
             if let Some(d) = self.map.get(&dest) {
@@ -51,6 +56,8 @@ where
         }
     }
 
+    /// dfs runs a depth first search through the graph starting at the node
+    /// with the given ID
     pub fn dfs(&self, start: T) {
         if let Some(o) = self.map.get(&start) {
             let mut visited = vec![false; self.data.len()];
