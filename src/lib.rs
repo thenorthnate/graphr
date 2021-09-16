@@ -1,6 +1,7 @@
 // Graphr
 
 use std::ops::{Index, IndexMut};
+use std::collections::HashMap;
 use std::hash::Hash;
 use std::fmt::Debug;
 use std::ops::Add;
@@ -16,21 +17,26 @@ where
 {
     fn size(&self) -> usize;
     fn clear(&mut self);
-    fn add_node(&mut self, node: &impl Node<V, E>) -> T;
-    fn add_edge(&mut self) -> Result<(), error::NodeError>;
+    fn add_node(&mut self, name: T, value: V) -> T;
+    /// del_node returns a mapping of old node names to new names based on a shift when
+    /// the named node was removed
+    fn del_node(&mut self, name: T) -> HashMap<T, T>;
+    fn add_edge(&mut self, origin: T, dest: T, value: E) -> Result<(), error::NodeError>;
+    fn get_edge(&self, origin: T, dest: T) -> Option<&E>;
+    fn out(&self, origin: T) -> Vec<T>;
 }
 
 // pub trait Graph<T, V, E>: Index<T>+IndexMut<T> {
 //     fn node(&self, id: T) -> dyn Node<V, E>;
 // }
 
-pub trait Node<V, E> {
-    fn eit(&self) -> dyn Iterator<Item = E>;
-}
+// pub trait Node<V, E> {
+//     fn eit(&self) -> dyn Iterator<Item = E>;
+// }
 
-pub trait Edge<E> {
+// pub trait Edge<E> {
 
-}
+// }
 
 
 
