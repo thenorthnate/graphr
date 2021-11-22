@@ -23,7 +23,7 @@ where
     fn del_node(&mut self, name: T) -> HashMap<T, T>;
     fn add_edge(&mut self, origin: T, dest: T, value: E) -> Result<(), error::NodeError>;
     fn get_edge(&self, origin: T, dest: T) -> Option<&E>;
-    fn out(&self, origin: T) -> Vec<T>;
+    fn get_edges(&self, origin: T) -> Vec<T>;
 }
 
 // pub trait Graph<T, V, E>: Index<T>+IndexMut<T> {
